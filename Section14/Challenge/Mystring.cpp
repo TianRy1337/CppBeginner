@@ -100,7 +100,7 @@ std::istream &operator>>(std::istream &in , Mystring &rhs)
     return in ;
 }
 /////////////////////挑戰 local funcion//////////////////////////////////////////
-
+/*
 //Make lowercase
 Mystring Mystring::operator-()const
 {
@@ -203,5 +203,111 @@ Mystring Mystring::operator++(int)
 {
     Mystring temp(*this);
     operator++();
+    return temp;
+}
+*/
+/////////////////////挑戰 Global funcion//////////////////////////////////////////
+
+//Make lowercase
+Mystring operator-(const Mystring &obj)
+{
+    char *buff = new char[std::strlen(obj.str)+1];
+    std::strcpy(buff,obj.str);
+    for(size_t i = 0; i < std::strlen(buff);i++)
+    {
+        buff[i] = std::tolower(buff[i]);
+    }
+    Mystring temp{buff};
+    delete[] buff;
+    return temp;
+}
+
+// Equality
+bool operator==(const Mystring &lhs,const Mystring &rhs)
+{
+    return(std::strcmp(lhs.str,rhs.str)==0);
+}
+
+// inequality
+bool operator!=(const Mystring &lhs,const Mystring &rhs)
+{
+    return(std::strcmp(lhs.str,rhs.str)!=0);
+}
+
+// less than
+bool operator<(const Mystring &lhs,const Mystring &rhs)
+{
+    return(std::strcmp(lhs.str,rhs.str)<0);
+}
+
+// greater than
+bool operator>(const Mystring &lhs,const Mystring &rhs)
+{
+    return(std::strcmp(lhs.str,rhs.str)>0);
+}
+
+//Concatentate
+Mystring operator+(const Mystring &lhs , const Mystring &rhs)
+{
+    char *buff = new char[std::strlen(lhs.str)+ std::strlen(rhs.str)+1];
+    std::strcpy(buff,lhs.str);
+    std::strcat(buff,rhs.str);
+    Mystring temp {buff};
+    delete [] buff;
+    return temp;
+}
+
+//Concatentate and return lhs
+Mystring operator+=(Mystring &lhs , const Mystring &rhs)
+{
+    char *buff = new char[std::strlen(lhs.str)+std::strlen(rhs.str)+1];
+    std::strcpy(buff,lhs.str);
+    std::strcat(buff,rhs.str);
+    lhs.str = buff;
+    return lhs;
+}
+
+//repeat
+Mystring operator*(const Mystring &obj,int iNum)
+{
+    char *buff = new char[(std::strlen(obj.str)*iNum)+1];
+    std::strcpy(buff,obj.str);
+    for(size_t i = 0 ; i < iNum-1;i++)
+    {
+        std::strcat(buff,obj.str);
+    }
+    Mystring temp{buff};
+    delete [] buff;
+    return temp;
+}
+
+//repeat and return lhs;
+Mystring operator*=(Mystring &lhs ,int iNum)
+{
+    char *buff = new char[(std::strlen(lhs.str)*iNum)+1];
+    std::strcpy(buff,lhs.str);
+    for(size_t i = 0 ; i < iNum-1;i++)
+    {
+        std::strcat(buff,lhs.str);
+    }
+    lhs.str = buff;
+    return lhs;
+}
+
+//++ pre-increment
+Mystring &operator++(Mystring &obj)
+{
+    for(size_t i =0;i<std::strlen(obj.str);i++)
+    {
+        obj.str[i] = std::toupper(obj.str[i]);
+    }
+    return obj;
+}
+
+//++ post-incremnet
+Mystring operator++(Mystring &obj, int)
+{
+    Mystring temp{obj};
+    ++obj;
     return temp;
 }

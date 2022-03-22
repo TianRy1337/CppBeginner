@@ -5,6 +5,17 @@ class Mystring
     friend std::ostream &operator<<(std::ostream &os, const Mystring &rhs);
     friend std::istream &operator>>(std::istream &in, Mystring &rhs);
 
+    friend Mystring operator-(const Mystring &obj);
+    friend bool operator==(const Mystring &lhs,const Mystring &rhs);
+    friend bool operator!=(const Mystring &lhs,const Mystring &rhs);
+    friend bool operator<(const Mystring &lhs,const Mystring &rhs);
+    friend bool operator>(const Mystring &lhs,const Mystring &rhs);
+    friend Mystring operator+(const Mystring &lhs , const Mystring &rhs);
+    friend Mystring operator+=(Mystring &lhs , const Mystring &rhs);
+    friend Mystring operator*(const Mystring &obj , int iNum);
+    friend Mystring operator*=(Mystring &lhs ,int iNum);
+    friend Mystring &operator++(Mystring &obj);
+    friend Mystring operator++(Mystring &obj, int);   
 private:
     char *str;  //pointer to a char[] that hold a C-style string
 public:
@@ -17,7 +28,7 @@ public:
     Mystring &operator=(const Mystring &rhs);   //Copy assignment
     Mystring &operator=(Mystring &&rhs);        //Move assignment
 
-    Mystring operator-()const;                      // make lowercase
+    /*Mystring operator-()const;                      // make lowercase
     bool operator==(const Mystring &rhs)const;      // Equalily
     bool operator!=(const Mystring &rhs)const;      // inequality
     bool operator<(const Mystring &rhs)const;       // Less than
@@ -28,7 +39,7 @@ public:
     Mystring operator*=(int iNum);                  // repeat and return lhs;
     Mystring &operator++();                    // pre-increment;
     Mystring operator++(int);                          // post-increment;
-
+    */
     void display() const;
     int get_length() const;                     //getters
     const char *get_str() const;

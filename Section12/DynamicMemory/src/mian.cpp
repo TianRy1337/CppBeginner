@@ -19,7 +19,7 @@ int main()
     
     dptr = new double[size];    // allocate the storage on the heap
     cout << dptr << endl;       // use it
-    delete [] dptr;                     // release it
+    delete [] dptr;             // release it
     
     return 0;
 }

@@ -1,11 +1,19 @@
 #include <iostream>
 using namespace std;
+
+int square(int &n)
+{
+	return n*n;
+}
+
 int main()
 {
-    int vals[] {1,2,3,4,5};
-    for(auto val:vals)
-    {
-        cout << val << endl;        
-    }
+
+    int a = -25;
+    //square(100);
+    
+
+    cout << square(a) << endl;
+
     return 0;
 }

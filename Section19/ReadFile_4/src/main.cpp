@@ -12,8 +12,6 @@ int main()
         return 1;
     }
 
-    std::string line{};
-
     char c{};
 
     while(in_File.get(c))

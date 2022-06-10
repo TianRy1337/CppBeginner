@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <ioma
+#include <iomanip>
 
 
 int main() 

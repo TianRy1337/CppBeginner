@@ -20,7 +20,8 @@ public:
         // }
         // return false;
 
-        // Answer 2
+        // Answer 2 //! Better
+
         long long ans=x;
         long long rev=0;
         while(x>0){

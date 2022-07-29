@@ -1,27 +1,37 @@
 #include <vector>
 #include <iostream>
+#include <unordered_map>
 using namespace std;
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        int l=0,r=1;
-         while(l<nums.size())
-         {
-            if(nums[r]==target-nums[l])
-            {
-                break;
+        // int l=0,r=1;
+        //  while(l<nums.size())
+        //  {
+        //     if(nums[r]==target-nums[l])
+        //     {
+        //         break;
+        //     }
+        //     else if(r==nums.size()-1) 
+        //     {
+        //         l++;
+        //         r=l+1;
+        //     }
+        //     else
+        //     {
+        //         r++;
+        //     }
+        // }
+        // return {l,r};
+        unordered_map<int, int> table;
+        int len = nums.size();
+        for(int i = 0; i < len; i++){
+            if(table.find(nums[i]) != table.end()){
+                return {table[nums[i]], i};
             }
-            else if(r==nums.size()-1) 
-            {
-                l++;
-                r=l+1;
-            }
-            else
-            {
-                r++;
-            }
+            table.insert({target - nums[i], i});
         }
-        return {l,r};
+        return nums;
     }
 };
 

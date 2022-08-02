@@ -19,7 +19,7 @@ public:
     vector<int> countSmaller(vector<int>& nums) {
         vector<int> Ans{};
         int count{0};
-        /// burte force time comp((n^2-1)/2)
+        ///* brute force time complexity ((n^2-1)/2)
         // for(int i = 0; i <nums.size(); i++){
         //     count = 0;
         //     for(int j = i+1; j<nums.size();j++){

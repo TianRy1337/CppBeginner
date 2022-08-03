@@ -1,66 +1,82 @@
+// 315. Count of Smaller Numbers After Self
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <unordered_map>
 #include <memory>
 using namespace std;
-struct BSTNode{
-    int val;
-    int count;
-    int left_count;
-    BSTNode* left;
-    BSTNode* right;
-    BSTNode(int val): val(val), count(1), left_count(0), left{nullptr}, right{nullptr}{}
-    ~BSTNode(){delete left; delete right;}
-    int less_or_equal() const{return count +left_count;}
-};
 class Solution {
 public:
-    vector<int> countSmaller(vector<int>& nums) {
-        vector<int> Ans{};
-        int count{0};
-        ///* brute force time complexity ((n^2-1)/2)
-        // for(int i = 0; i <nums.size(); i++){
-        //     count = 0;
-        //     for(int j = i+1; j<nums.size();j++){
-        //         if(nums[i]>nums[j]){
-        //             count++;
-        //         }
-        //         count++;
-        //     }
-        //     Ans.push_back(count);
-        // }
+
+    void merge(int left, int mid, int right, vector<pair<int, int>>& arr,vector<int>& count)
+    {
+        vector<pair<int, int>> temp(right - left + 1);
         
-        if(nums.empty())return{};
-        std::reverse(nums.begin(), nums.end());
-        std::unique_ptr<BSTNode> root(new BSTNode(nums[0]));
-        vector<int> ans{0};
-        for (int i = 1; i < nums.size(); ++i)
-            ans.push_back(insert(root.get(), nums[i]));
-        std::reverse(ans.begin(), ans.end());
-        return ans;
-    }
-private:
-    // Returns the number of elements smaller than val under root.
-    int insert(BSTNode* root, int val) {
-        if (root->val == val) {
-            ++root->count;
-            return root->left_count;
-        } else if (val < root->val) {
-            ++root->left_count;
-            if (root->left == nullptr) {
-                root->left = new BSTNode(val);            
-                return 0;
-            } 
-            return insert(root->left, val);
-        } else  {
-            if (root->right == nullptr) {
-                root->right = new BSTNode(val);
-                return root->less_or_equal();
+        int i = left;
+        int j = mid + 1;
+        int k = 0;
+        
+        while(i <= mid && j <= right)
+        {
+            if(arr[i].first <= arr[j].first)
+            {
+                temp[k++] = arr[j++]; 
             }
-            return root->less_or_equal() + insert(root->right, val);
+            else
+            {
+                count[arr[i].second] += (right - j + 1);
+                
+                temp[k++] = arr[i++];
+            }
         }
+        
+        while(i <= mid)
+        {
+            temp[k++] = arr[i++];
+        }
+        
+        while(j <= right)
+        {
+            temp[k++] = arr[j++];
+        }
+        
+        for(int l = left; l <= right; l++)
+        arr[l] = temp[l - left];
+        
     }
+                
+    void mergeSort(int left, int right, vector<pair<int, int>>& arr, vector<int>& count)
+    {
+        if(left >= right)
+        {
+            return;
+        }
+
+        int mid = left + (right - left) / 2;
+        
+        mergeSort(left, mid, arr, count);
+        mergeSort(mid + 1, right, arr, count);
+        
+        merge(left, mid, right, arr, count);
+    }
+    
+	vector<int> countSmaller(vector<int>& nums) {
+	    
+        int n=nums.size();
+	    vector<pair<int, int>> arr;
+        
+	    for(int i = 0; i < n; i++)
+	    {
+	        arr.push_back({nums[i], i});
+	    }
+	    
+	    vector<int> count(n, 0);
+	    
+	    mergeSort(0, n - 1, arr, count);
+	    
+	    return count;
+	}
+  
 };
 
 void printVec(vector<int> const &_vec){
